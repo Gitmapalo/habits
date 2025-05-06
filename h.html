@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Tracker</title>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  
+  <div class="app-container">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="navbar-left">
+        <button id="mobile-menu-toggle" class="mobile-menu-button">
+          <span class="material-icons">menu</span>
+        </button>
+        <div class="navbar-logo">
+          <div class="navbar-logo-icon">H</div>
+          <span class="navbar-logo-text">HabitTracker</span>
+        </div>
+      </div>
+      <div class="navbar-right">
+        <div class="notification-bell" id="notification-bell">
+          <span class="material-icons">notifications</span>
+          <span id="notification-count" class="notification-count" style="display: none;">0</span>
+          
+          <div id="notification-panel" class="notification-panel">
+            <div class="notification-header">
+              <div class="notification-title">Notifications</div>
+              <button id="mark-all-read" class="mark-all-read">Mark all as read</button>
+            </div>
+            <div id="notification-list" class="notification-list">
+              <!-- Notifications will be added here by JS -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="user-profile">
+          <div class="user-avatar">
+            <img id="user-avatar" src="david.jpg" alt="User avatar">
+          </div>
+          <span id="user-name" class="user-name">David</span>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Mobile overlay -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+    
+    <!-- Sidebar (visible on desktop) -->
+    <aside id="sidebar" class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-title">Menu</div>
+        <div class="sidebar-nav-link active" data-tab="habits">
+          <div class="sidebar-nav-link-icon">
+            <span class="material-icons">home</span>
+          </div>
+          Home
+        </div>
+        <div class="sidebar-nav-link" data-tab="calendar">
+          <div class="sidebar-nav-link-icon">
+            <span class="material-icons">calendar_today</span>
+          </div>
+          Calendar
+        </div>
+        <div class="sidebar-nav-link" data-tab="analytics">
+          <div class="sidebar-nav-link-icon">
+            <span class="material-icons">bar_chart</span>
+          </div>
+          Analytics
+        </div>
+        <div class="sidebar-nav-link" data-tab="achievements">
+          <div class="sidebar-nav-link-icon">
+            <span class="material-icons">emoji_events</span>
+          </div>
+          Achievements
+        </div>
+      </nav>
+    </aside>
+    
+    <!-- Main content -->
+    <main class="main-content">
+      <!-- Tab content -->
+      <div class="tab-content active" id="habits-tab">
+        <!-- Quote section -->
+        <div class="quote-section">
+          <div class="quote-overlay"></div>
+          <div class="quote-content">
+            <div id="quote-text" class="quote-text">Habits are the compound interest of self-improvement.</div>
+            <div id="quote-author" class="quote-author">― James Clear</div>
+          </div>
+        </div>
+        
+        <!-- Habit overview with images -->
+        <div class="habit-overview">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Overview</h2>
+            </div>
+            <div class="card-body">
+              <div id="overview-stats" class="analytics-overview">
+                <!-- Stats will be added here by JS -->
+              </div>
+            </div>
+          </div>
+          
+          <div class="overview-image">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Person tracking habits">
+          </div>
+        </div>
+        
+        <!-- Add new habit form -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Add New Habit</h2>
+          </div>
+          <div class="card-body">
+            <form id="add-habit-form">
+              <div class="form-group">
+                <label for="habit-name">Habit Name</label>
+                <input type="text" id="habit-name" placeholder="E.g., Drink water" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="habit-category">Category</label>
+                <select id="habit-category" required>
+                  <option value="health">Health</option>
+                  <option value="work">Work</option>
+                  <option value="personal">Personal</option>
+                  <option value="learning">Learning</option>
+                  <option value="social">Social</option>
+                </select>
+              </div>
+              
+              <div class="form-buttons">
+                <button type="submit">Add Habit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Habits list -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Your Habits</h2>
+          </div>
+          <div class="card-body">
+            <div id="habit-list" class="habit-list">
+              <!-- Habits will be rendered here by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Calendar tab -->
+      <div class="tab-content" id="calendar-tab">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Monthly Habit View</h2>
+          </div>
+          <div class="card-body">
+            <div class="calendar-header">
+              <h3 class="calendar-title" id="calendar-month">Month Year</h3>
+              <div class="calendar-nav">
+                <button id="prev-month" class="button-secondary">
+                  <span class="material-icons">chevron_left</span>
+                </button>
+                <button id="next-month" class="button-secondary">
+                  <span class="material-icons">chevron_right</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="calendar-habit">Select Habit</label>
+              <select id="calendar-habit">
+                <!-- Habits will be populated here by JS -->
+              </select>
+            </div>
+            
+            <div class="calendar-days-header calendar-grid">
+              <div class="calendar-day-header">Sun</div>
+              <div class="calendar-day-header">Mon</div>
+              <div class="calendar-day-header">Tue</div>
+              <div class="calendar-day-header">Wed</div>
+              <div class="calendar-day-header">Thu</div>
+              <div class="calendar-day-header">Fri</div>
+              <div class="calendar-day-header">Sat</div>
+            </div>
+            
+            <div id="calendar-grid" class="calendar-grid">
+              <!-- Calendar days will be rendered here by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Analytics tab -->
+      <div class="tab-content" id="analytics-tab">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Habit Analytics</h2>
+          </div>
+          <div class="card-body">
+            <div id="analytics-stats" class="analytics-overview">
+              <!-- Analytics stats will be rendered here by JS -->
+            </div>
+            
+            <div class="charts-container">
+              <div class="card">
+                <div class="card-header">
+                  <h3>Weekly Completion Rate</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <div id="completion-chart" class="completion-chart">
+                      <!-- Chart will be rendered here by JS -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-header">
+                  <h3>Category Distribution</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <div class="category-chart">
+                      <div class="chart-donut">
+                        <div class="chart-donut-hole">
+                          <div id="donut-percent" class="donut-percent">0%</div>
+                          <div class="donut-label">Completion</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart-legend" id="category-legend">
+                      <!-- Legend will be rendered here by JS -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Habit Performance</h2>
+          </div>
+          <div class="card-body">
+            <div id="habit-performance">
+              <!-- Performance metrics will be rendered here by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Achievements tab -->
+      <div class="tab-content" id="achievements-tab">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Achievement Badges</h2>
+          </div>
+          <div class="card-body">
+            <p>Complete your habits to unlock these badges!</p>
+            
+            <div class="badges-grid" id="badges-container">
+              <!-- Badges will be rendered here by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container">
+      <!-- Toasts will be added here by JS -->
+    </div>
+  </div>
+  
+ <script src="app.js"></script>
+</body>
+</html>
+ 
+   
+  
